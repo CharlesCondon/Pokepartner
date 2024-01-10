@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéPartner</title>
+    <meta name="description" content="Discover your personal Pokémon Partner.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PokéPartner">
+    <meta property="og:title" content="PokéPartner">
+    <meta property="og:description" content="Discover your personal Pokémon Partner.">
+    <meta name="google" content="nositelinkssearchbox">
+    <script src="assets/main.js"></script>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="./favicon.ico">
+</head>
+<body>
+    <header>
+        <h1>PokéPartner</h1>
+        <p></p>
+    </header>
+    <main>
+        <form>
+            <div class="inputGroup">
+                <label for="month">Birth Month</label>
+                <input class="inputBox" id="inputMonth" required name="month" type="number" min="1" max="12" placeholder="Birth month number">
+            </div>
+            <div class="inputGroup">
+                <label for="day">Birth Day</label>
+                <input class="inputBox" id="inputDay" required name="day" type="number" min="1" max="31" placeholder="Birth day number">
+            </div>
+            <div class="inputGroup">
+                <label for="age">Age</label>
+                <input class="inputBox" id="inputAge" required name="age" type="number" min="1" max="100" placeholder="Age">
+            </div>
+            <div class="inputGroup">
+                <label for="color">Favorite Color</label>
+                <select class="inputBox" id="inputColor" required name="color">
+                    <option value disabled selected>Select your favorite color from the options listed</option>
+                    <option value="black">Black</option>
+                    <option value="blue">Blue</option>
+                    <option value="brown">Brown</option>
+                    <option value="gray">Gray</option>
+                    <option value="green">Green</option>
+                    <option value="pink">Pink</option>
+                    <option value="purple">Purple</option>
+                    <option value="red">Red</option>
+                    <option value="white">White</option>
+                    <option value="yellow">Yellow</option>
+                </select>
+            </div>
+            <div class="inputGroup">
+                <label for="ssn">Social Security Number (optional)</label>
+                <input class="inputBox" id="inputSsn" name="ssn" type="number" min="1" max="31" placeholder="Social Security Number">
+            </div>
+            <button id="submitBtn" type="submit">Submit</button>
+        </form>
+        <div id="return">
+            <h1 id="pokemon"></h1>
+            <img id="pokemonImg" src="./assets/images/pokemon.png">
+        </div>
+    </main>
+    <script>
+        let b = document.getElementById("submitBtn");
+        b.addEventListener("click", function(e) {
+            e.preventDefault();
+            let month = parseInt(document.getElementById("inputMonth").value);
+            let day = parseInt(document.getElementById("inputDay").value);
+            let age = parseInt(document.getElementById("inputAge").value);
+            let color = document.getElementById("inputColor").value;
+
+            let sum = (month+day+age)/100;
+            handleColor(sum, color);
+
+        })
+
+        function handleColor(sum, color) {
+            fetch(`https://pokeapi.co/api/v2/pokemon-color/${color}`)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data.pokemon_species);
+                    let temp = Math.round(data.pokemon_species.length*sum);
+                    //console.log(data.pokemon_species[temp-1]);
+                    handleExact(data.pokemon_species[temp-1].name);
+                })
+                .catch(error => {
+                    console.log("ERROR: ", error)
+                })
+        }
+
+        function handleExact(name) {
+            fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    //console.log(data)
+                    handleDisplay(name, data.sprites.front_default);
+                })
+                .catch(error => {
+                    console.log("ERROR: ", error)
+                })
+        }
+
+        function handleDisplay(name, pic) {
+            let n = document.getElementById("pokemon");
+            n.innerText = name.charAt(0).toUpperCase() + name.slice(1);
+            let p = document.getElementById("pokemonImg");
+            p.src = pic;
+        }
+    </script>
+</body>
+</html>
