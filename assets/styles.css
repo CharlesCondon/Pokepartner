@@ -1,30 +1,52 @@
 body {
-    background: rgb(35,88,140);
+    background: rgb(27,40,62);
     color: white;
+    margin: 0;
+    padding: 0;
 }
 
 main {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: row;
     justify-content: space-evenly;
     margin-bottom: 40px;
     gap: 40px;
     align-items: center;
 }
 
-header h1 {
+header {
     text-align: center;
+    background: rgb(17, 28, 46);
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+header h1 {
     font-size: 3rem;
+    margin: 0px 0;
+}
+
+#altChoices {
+
 }
 
 form {
-    color: black;
-    background: rgb(94,177,191);
+    color: white;
+    background: rgb(12,19,29);
     display: flex;
     flex-direction: column;
-    border: 5px double rgb(153, 215, 226);
+    border: 5px double rgba(153, 215, 226, .1);
     border-radius: 10px;
     padding: 20px;
+}
+
+form p {
+    margin: 0;
+    margin-bottom: 1.25rem;
+    text-align: center;
 }
 
 label {
@@ -48,6 +70,7 @@ label {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 400px;
 }
 
 #submitBtn {
@@ -77,6 +100,29 @@ label {
 #pokemonImg {
     width: 300px;
     height: 300px;
+}
+
+#infoGroups {
+    background: rgb(12,19,29);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-evenly;
+    border: 5px double rgba(153, 215, 226, .1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 368px;
+    margin-top: 27px;
+}
+
+#typesP {
+    margin-bottom: 5px;
+    text-decoration: underline;
+    text-align: left;
+}
+
+.hidden {
+    display: none !important;
 }
 
 @media only screen and (max-width: 700px) {

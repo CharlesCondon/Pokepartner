@@ -18,10 +18,15 @@
 <body>
     <header>
         <h1>PokéPartner</h1>
-        <p></p>
+        <!-- <div id="altChoices">
+            <button>Random</button>
+            <button>Random</button>
+            <button>Random</button>
+        </div> -->
     </header>
     <main>
         <form>
+            <p>Find your perfect Pokémon match today!</p>
             <div class="inputGroup">
                 <!-- <label for="month">Birth Month</label> -->
                 <input class="inputBox" id="inputMonth" required name="month" type="number" min="1" max="12" placeholder="Birth month number">
@@ -59,8 +64,19 @@
         <div id="return">
             <h1 id="pokemon"></h1>
             <img id="pokemonImg" src="./assets/images/pokemon.png">
+            <div id="infoGroups" class="hidden">
+                <div>
+                    <p id="height"></p>
+                    <p id="weight"></p>
+                </div>
+                <div>
+                    <ul id="types"></ul>
+                </div>
+            </div>
         </div>
+        
     </main>
+
     <script>
         let b = document.getElementById("submitBtn");
         b.addEventListener("click", function(e) {
@@ -97,19 +113,49 @@
                     return res.json();
                 })
                 .then(data => {
-                    //console.log(data)
-                    handleDisplay(name, data.sprites.front_default);
+                    console.log(data)
+                    handleDisplay(name, data.sprites.front_default, data.height, data.weight, data.types);
                 })
                 .catch(error => {
                     console.log("ERROR: ", error)
                 })
         }
 
-        function handleDisplay(name, pic) {
+        function handleDisplay(name, pic, height, weight, types) {
             let n = document.getElementById("pokemon");
             n.innerText = name.charAt(0).toUpperCase() + name.slice(1);
+
             let p = document.getElementById("pokemonImg");
             p.src = pic;
+
+            let h = height*.33;
+            let inch = h%1;
+            inch = Math.round(12*inch);
+            let feet = Math.floor(h);
+
+            if (inch === 12) {
+                inch = 0;
+                feet += 1;
+            }
+
+            let infoGroups = document.getElementById('infoGroups');
+            infoGroups.classList.remove("hidden")
+
+            let heightDiv = document.getElementById("height");
+            heightDiv.innerText = `Height: ${feet}'${inch}"`;
+
+            let w = weight*.22;
+            let weightDiv = document.getElementById('weight');
+            weightDiv.innerText = `Weight: ${w} lbs`;
+
+            let typeDiv = document.getElementById("types");
+            typeDiv.innerHTML = "<p id=typesP>Types</p>"
+            types.forEach( t => {
+                let tempT = document.createElement("li");
+                tempT.innerText = t.type.name;
+                typeDiv.appendChild(tempT);
+            })
+            
         }
     </script>
 </body>
