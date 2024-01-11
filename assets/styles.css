@@ -1,7 +1,15 @@
+body {
+    background: rgb(35,88,140);
+    color: white;
+}
+
 main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     justify-content: space-evenly;
+    margin-bottom: 40px;
+    gap: 40px;
+    align-items: center;
 }
 
 header h1 {
@@ -10,9 +18,11 @@ header h1 {
 }
 
 form {
+    color: black;
+    background: rgb(94,177,191);
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
+    border: 5px double rgb(153, 215, 226);
     border-radius: 10px;
     padding: 20px;
 }
@@ -40,6 +50,25 @@ label {
     justify-content: center;
 }
 
+#submitBtn {
+    border-radius: 100px;
+    border: 1px solid rgb(35,88,140);
+    padding: 10px 0px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: rgb(35,88,140);
+    color: white;
+}
+
+#submitBtn:hover {
+    color: rgb(153, 215, 226);
+    background: rgb(24, 72, 121);
+}
+
+#submitBtn:active {
+    background: rgb(17, 59, 102);
+}
+
 #pokemon {
     text-align: center;
     font-size: 2.5rem;
@@ -53,5 +82,9 @@ label {
 @media only screen and (max-width: 700px) {
     main {
         flex-direction: column-reverse;
+    }
+    form {
+        margin: 20px;
+        padding: 40px;
     }
 }
